@@ -1,0 +1,9 @@
+/* 整个项目的公共样式 */
+
+/* 覆盖vant自带的导航栏样式 */
+.van-nav-bar {
+    background-color: #3196fa;
+    .van-nav-bar__title{
+        color:#fff
+    }
+}
