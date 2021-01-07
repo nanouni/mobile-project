@@ -28,11 +28,14 @@
    <div class="btn-login">
       <van-button class="van-btn" type="info" @click="login">登 录</van-button>
    </div>
+   <!-- 测试按钮 -->
+    <van-button plain hairline type="primary" @click="testFn">获取当前用户信息</van-button>
   </div>
 </template>
 
 <script>
-import { reqLogin } from '@/api/user.js'
+import { reqLogin, reqGetProfile } from '@/api/user.js'
+import { mapMutations } from 'vuex'
 export default {
   name: 'Login',
   data () {
@@ -44,6 +47,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('user', ['setTokenInfo']),
     // 专门用于表单内容进行校验，配置对应的提示
     // validate 返回值 ：布尔值 ，true校验通过 / false校验失败
     validate () {
@@ -95,9 +99,15 @@ export default {
         // })
         // console.log(res.data)
         const res = await reqLogin(this.mobile, this.code)
-        console.log(res.data)
+        // console.log(res.data)
+        console.log(res)
+        this.setTokenInfo(res.data.data)
       }
       this.$toast.success('登录成功')
+    },
+    async testFn () {
+      const res = await reqGetProfile()
+      console.log(res.data)
     }
   }
 }
